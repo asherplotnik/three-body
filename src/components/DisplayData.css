@@ -1,0 +1,9 @@
+.Telemetry {
+    position: absolute;
+    text-align: left;
+    left: 0;
+    height: 50vh;
+    width: 24vw;
+    background-color: rgb(201, 199, 199);
+    color: rgb(0, 0, 0);
+}

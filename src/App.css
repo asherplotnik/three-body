@@ -1,0 +1,16 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.Scene {
+    position:fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+

@@ -1,0 +1,8 @@
+.Debug {
+    position:absolute;
+    left: 0;
+    height: 20vh;
+    width: 30vw;
+    color: white; 
+    background-color: rgba(0, 0, 0, 0.5)
+}
