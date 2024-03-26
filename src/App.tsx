@@ -12,6 +12,10 @@ const App = () => {
   const [telemetry2, setTelemetry2] = useState<Telemetry>(getInitialTelemetry(1));
   const [telemetry3, setTelemetry3] = useState<Telemetry>(getInitialTelemetry(2));
   const [gState, setGState] = useState(6.674 * Math.pow(10, -11));
+  const [twoBodies, setTwoBodies] = useState<boolean>(true);
+  const toggleTwoBodies = () => {
+    setTwoBodies(prev => !prev);
+  }
   const contextValue: ContextUpdater = { 
     telemetry1, telemetry2, telemetry3, setTelemetry1, setTelemetry2, setTelemetry3, gState, setGState  
   };
@@ -33,9 +37,9 @@ const App = () => {
         <OrbitControls />
         <Sphere me = {1}/>
         <Sphere me = {2}/>
-        <Sphere me = {3}/>
+        {twoBodies && <Sphere me = {3}/>}
       </Canvas> 
-      <DisplayData />
+      <DisplayData toggle={toggleTwoBodies}/>
     </div>
     </AppContext.Provider>
   );

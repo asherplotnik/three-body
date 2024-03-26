@@ -52,7 +52,7 @@ const Sphere = (props: MyComponentProps) => {
         setTelemetry,
         telemetry,
         getPositionA(context, props.me),
-        getPositionA(context, props.me),
+        getPositionB(context, props.me),
         gState
       );
     if (meshRef.current) {
