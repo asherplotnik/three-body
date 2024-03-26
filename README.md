@@ -3,6 +3,8 @@
  
  npm run dev
 
+ press space bar to start/pause
+
 #
 
 # React + TypeScript + Vite
