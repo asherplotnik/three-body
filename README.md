@@ -1,5 +1,6 @@
 # type in terminal
- npm install
+ npm install 
+ 
  npm run dev
 
 #
