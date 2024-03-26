@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
 
 const SliderComponent: React.FC = () => {
-    const MIN_EXPONENT = -20;
+    const MIN_EXPONENT = -30;
     const MAX_EXPONENT = -1;
     const [currentExponent, setCurrentExponent] = useState(-11);
     const context = useAppContext();
