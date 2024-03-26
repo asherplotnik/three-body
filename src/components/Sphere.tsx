@@ -4,23 +4,23 @@ import { Mesh } from "three";
 import "./Sphere.css";
 import { useAppContext } from "../context/AppContext";
 interface MyComponentProps {
-  setTelemetry: Dispatch<SetStateAction<Telemetry>>;
-  telemetry: Telemetry;
-  positionA: Position;
-  positionB: Position;
+  me: number;
 }
 
 const Sphere = (props: MyComponentProps) => {
+  const context = useAppContext();
+  const telemetry = getMyTelemetry(context, props.me);
+  const setTelemetry = setMyTelemetry(context, props.me);
   const [isPaused, setIsPaused] = useState(true);
-  const [vector, setVector] = useState<Vector>(props.telemetry.vector);
-  const [position, setPosition] = useState<Position>(props.telemetry.position);
+  const [vector, setVector] = useState<Vector>(telemetry.vector);
+  const [position, setPosition] = useState<Position>(telemetry.position);
   const meshRef = useRef<Mesh>(null!);
   const gState = useAppContext().gState;
-  
+
   useEffect(() => {
-    meshRef.current.position.x = props.telemetry.position.x;
-    meshRef.current.position.y = props.telemetry.position.y;
-    meshRef.current.position.z = props.telemetry.position.z;
+    meshRef.current.position.x = telemetry.position.x;
+    meshRef.current.position.y = telemetry.position.y;
+    meshRef.current.position.z = telemetry.position.z;
     console.log(Boolean(meshRef.current));
   }, []);
 
@@ -49,10 +49,10 @@ const Sphere = (props: MyComponentProps) => {
         setVector,
         position,
         vector,
-        props.setTelemetry,
-        props.telemetry,
-        props.positionA,
-        props.positionB,
+        setTelemetry,
+        telemetry,
+        getPositionA(context, props.me),
+        getPositionA(context, props.me),
         gState
       );
     if (meshRef.current) {
@@ -65,7 +65,7 @@ const Sphere = (props: MyComponentProps) => {
   return (
     <mesh ref={meshRef}>
       <sphereGeometry args={[0.1, 32, 32]} />
-      <meshStandardMaterial metalness={props.telemetry.ordinal*0.5} roughness={0.1} />
+      <meshStandardMaterial metalness={telemetry.ordinal*0.5} roughness={0.1} />
     </mesh>
   );
 };
@@ -131,4 +131,40 @@ const calcNewPositionAndMomentum = (
 const getForce = (force: number, positionA: number, position: number, distance: number) => {
     return force*(positionA - position)/distance; 
 } 
+
+const getMyTelemetry = (context: ContextUpdater, me: number): Telemetry => {
+    switch (me) {
+        case 1: return context.telemetry1;
+        case 2: return context.telemetry2;
+        case 3: return context.telemetry3;
+        default: return null!;
+    }
+}
+
+const setMyTelemetry = (context: ContextUpdater, me: number): Function => {
+    switch (me) {
+        case 1: return context.setTelemetry1;
+        case 2: return context.setTelemetry2;
+        case 3: return context.setTelemetry3;
+        default: return null!;
+    }
+}
+
+const getPositionA = (context: ContextUpdater, me: number): Position => {
+    switch (me) {
+        case 1: return context.telemetry2.position;
+        case 2: return context.telemetry1.position;
+        case 3: return context.telemetry1.position;
+        default: return null!;
+    }
+}
+
+const getPositionB = (context: ContextUpdater, me: number): Position => {
+    switch (me) {
+        case 1: return context.telemetry3.position;
+        case 2: return context.telemetry3.position;
+        case 3: return context.telemetry2.position;
+        default: return null!;
+    }
+}
 export default Sphere;

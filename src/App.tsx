@@ -31,24 +31,9 @@ const App = () => {
         <pointLight position={[10, 10, 10]} />
         <axesHelper args={[8]} />
         <OrbitControls />
-        <Sphere
-          setTelemetry={setTelemetry1}
-          telemetry={telemetry1}
-          positionA={telemetry2.position}
-          positionB={telemetry3.position}
-        />
-        <Sphere
-          setTelemetry={setTelemetry2}
-          telemetry={telemetry2}
-          positionA={telemetry1.position}
-          positionB={telemetry3.position}
-        />
-        <Sphere
-          setTelemetry={setTelemetry3}
-          telemetry={telemetry3}
-          positionA={telemetry1.position}
-          positionB={telemetry2.position}
-        />
+        <Sphere me = {1}/>
+        <Sphere me = {2}/>
+        <Sphere me = {3}/>
       </Canvas> 
       <DisplayData />
     </div>
