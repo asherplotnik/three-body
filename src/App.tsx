@@ -3,14 +3,20 @@ import "./App.css";
 import Sphere from "./components/Sphere";
 import { useState } from "react";
 import getInitialPosition from "./commons/getInitialPosition";
-//import DisplayData from "./components/DisplayData";
+import DisplayData from "./components/DisplayData";
 import { OrbitControls } from '@react-three/drei';
+import { AppContext } from "./context/AppContext";
 
 const App = () => {
   const [telemetry1, setTelemetry1] = useState<Telemetry>(getInitialTelemetry(0));
   const [telemetry2, setTelemetry2] = useState<Telemetry>(getInitialTelemetry(1));
   const [telemetry3, setTelemetry3] = useState<Telemetry>(getInitialTelemetry(2));
+  const [gState, setGState] = useState(6.674 * Math.pow(10, -11));
+  const contextValue: ContextUpdater = { 
+    telemetry1, telemetry2, telemetry3, setTelemetry1, setTelemetry2, setTelemetry3, gState, setGState  
+  };
   return (
+    <AppContext.Provider value={contextValue}>
     <div className="Scene">
        <Canvas
         camera={{
@@ -44,15 +50,14 @@ const App = () => {
           positionB={telemetry2.position}
         />
       </Canvas> 
-      {/* <DisplayData telemetry={telemetry1} />
-      <DisplayData telemetry={telemetry2} />
-      <DisplayData telemetry={telemetry3} /> */}
+      <DisplayData />
     </div>
+    </AppContext.Provider>
   );
 };
 
 const getInitialTelemetry = (ordinal: number): Telemetry => {
-  const randomPosition = getInitialPosition(1);
+  const randomPosition = getInitialPosition(2);
   return {
     ordinal: ordinal,
     position: randomPosition,

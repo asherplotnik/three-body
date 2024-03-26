@@ -2,6 +2,7 @@ import { useFrame } from "@react-three/fiber";
 import { useRef, useEffect, useState, Dispatch, SetStateAction } from "react";
 import { Mesh } from "three";
 import "./Sphere.css";
+import { useAppContext } from "../context/AppContext";
 interface MyComponentProps {
   setTelemetry: Dispatch<SetStateAction<Telemetry>>;
   telemetry: Telemetry;
@@ -14,6 +15,7 @@ const Sphere = (props: MyComponentProps) => {
   const [vector, setVector] = useState<Vector>(props.telemetry.vector);
   const [position, setPosition] = useState<Position>(props.telemetry.position);
   const meshRef = useRef<Mesh>(null!);
+  const gState = useAppContext().gState;
   
   useEffect(() => {
     meshRef.current.position.x = props.telemetry.position.x;
@@ -41,7 +43,6 @@ const Sphere = (props: MyComponentProps) => {
     if (isPaused) {
       return;
     }
-
     const newPosition = calcNewPositionAndMomentum(
         1,
         setPosition,
@@ -51,7 +52,8 @@ const Sphere = (props: MyComponentProps) => {
         props.setTelemetry,
         props.telemetry,
         props.positionA,
-        props.positionB
+        props.positionB,
+        gState
       );
     if (meshRef.current) {
       meshRef.current.position.x = newPosition.x;
@@ -77,13 +79,13 @@ const calcNewPositionAndMomentum = (
   setTelemetry: Function,
   telemetry: Telemetry,
   positionA: Position,
-  positionB: Position
+  positionB: Position,
+  gState: number
 ): Position => {
-  const G = 6.674 * Math.pow(10, -11);
   const distanceA =  Math.sqrt((position.x + positionA.x)**2 + (position.y + positionA.y)**2 + (position.z + positionA.z)**2);
   const distanceB = Math.sqrt((position.x + positionB.x)**2 + (position.y + positionB.y)**2 + (position.z + positionB.z)**2);
-  const totalForceA = (G * position.mass * positionA.mass) / distanceA**2;
-  const totalForceB = (G * position.mass * positionB.mass) / distanceA**2;
+  const totalForceA = (gState * position.mass * positionA.mass) / distanceA**2;
+  const totalForceB = (gState * position.mass * positionB.mass) / distanceA**2;
   const forceA = {
     x: getForce(totalForceA, positionA.x, position.x, distanceA),
     y: getForce(totalForceA, positionA.y, position.y, distanceA),

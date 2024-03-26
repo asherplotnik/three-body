@@ -5,11 +5,11 @@ const getInitialPosition = (props: number): Position => {
   return {mass: 10000000, x: randomNumberX, y: randomNumberY, z: randomNumberZ};
 };
 
-// const getRandomPosition = (props: number): Position => {
-//   const x = props < 2 ? props : -1
-//   const y = props < 2 ? props :  1.5
-//   const z = props < 2 ? props : 1;
-//   return {mass: 10000, x: x, y: y, z: z};
-// }
+export const getRandomPosition = (props: number): Position => {
+  const x = props < 2 ? props : -1
+  const y = props < 2 ? props :  1.5
+  const z = props < 2 ? props : 1;
+  return {mass: 10000, x: x, y: y, z: z};
+}
 
 export default getInitialPosition;
